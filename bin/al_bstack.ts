@@ -1,9 +1,15 @@
 #!/usr/bin/env node
+import { ENV } from "../env";
 import * as cdk from 'aws-cdk-lib/core';
-import { AlBstackStack } from '../lib/al_bstack-stack';
+import { AlbStack } from '../lib/al_bstack-stack';
+
+
 
 const app = new cdk.App();
-new AlBstackStack(app, 'AlBstackStack', {
+
+// Set AWS credentials from the env file
+
+new AlbStack(app, 'AlbStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -17,4 +23,14 @@ new AlBstackStack(app, 'AlBstackStack', {
   // env: { account: '123456789012', region: 'us-east-1' },
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+});
+
+
+
+
+new AlbStack(app, "FriendStack", {
+  env: {
+    account: ENV.account,
+    region: ENV.region,
+  },
 });
